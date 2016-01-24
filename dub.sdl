@@ -1,0 +1,7 @@
+name "bgfx-d"
+description "A minimal D application."
+copyright "Copyright © 2016, a24680"
+authors "a24680"
+libs "bgfx" "GL"
+lflags "-L."
+dependency "derelict-sdl2" version=">=1.9.7"
