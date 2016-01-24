@@ -1,7 +1,7 @@
 name "bgfx-d"
 description "D Bindings to the bgfx C++ API"
 copyright "Copyright © 2016, David Limbeck"
-authors "a24680"
+authors "puffi"
 libs "bgfx" "GL"
 lflags "-L."
 license "BSD 2-clause"
