@@ -292,7 +292,7 @@ version(BgfxSDL2)
 
 }
 
-version(DerelictGLFW3)
+version(BgfxGLFW3)
 {
 // #elif defined(_glfw3_h_)
 // If GLFW/glfw3.h is included before bgfxplatform.h we can enable GLFW3
