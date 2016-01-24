@@ -249,93 +249,93 @@ else version(WinRT)
 // #endif // BX_PLATFORM_
 }
 
-version(BgfxSDL2)
-{
-// #if defined(_SDL_syswm_h)
-// If SDL_syswm.h is included before bgfxplatform.h we can enable SDL window
-// interop convenience code.
-	import derelict.sdl2.sdl;
-
-	bool sdlSetWindow(SDL_Window* _window)
-	{
-		SDL_SysWMinfo wmi;
-		SDL_VERSION(&wmi.version_);
-		if (!SDL_GetWindowWMInfo(_window, &wmi) )
-		{
-			return false;
-		}
-
-		PlatformData pd;
-		version(Posix)
-		{
-			import core.stdc.stdint : uintptr_t;
-			pd.ndt          = wmi.info.x11.display;
-			pd.nwh          = cast(void*)cast(uintptr_t)wmi.info.x11.window;
-		}
-		else version(Darwin)
-		{
-			pd.ndt          = null;
-			pd.nwh          = wmi.info.cocoa.window;
-		}
-		else version(Windows)
-		{
-			pd.ndt          = null;
-			pd.nwh          = wmi.info.win.window;
-		}
-		pd.context      = null;
-		pd.backBuffer   = null;
-		pd.backBufferDS = null;
-		setPlatformData(pd);
-
-		return true;
-	}
-
-}
-
-version(BgfxGLFW3)
-{
-// #elif defined(_glfw3_h_)
-// If GLFW/glfw3.h is included before bgfxplatform.h we can enable GLFW3
-// window interop convenience code.
-
-// #	if BX_PLATFORM_LINUX || BX_PLATFORM_BSD
-// #		define GLFW_EXPOSE_NATIVE_X11
-// #		define GLFW_EXPOSE_NATIVE_GLX
-// #	elif BX_PLATFORM_OSX
-// #		define GLFW_EXPOSE_NATIVE_COCOA
-// #		define GLFW_EXPOSE_NATIVE_NSGL
-// #	elif BX_PLATFORM_WINDOWS
-// #		define GLFW_EXPOSE_NATIVE_WIN32
-// #		define GLFW_EXPOSE_NATIVE_WGL
-// #	endif //
-// #	include <GLFW/glfw3native.h>
-
-// extern(C++, bgfx)
+// version(BgfxSDL2)
 // {
-// 	void glfwSetWindow(GLFWwindow* _window)
+// // #if defined(_SDL_syswm_h)
+// // If SDL_syswm.h is included before bgfxplatform.h we can enable SDL window
+// // interop convenience code.
+// 	import derelict.sdl2.sdl;
+// 
+// 	bool sdlSetWindow(SDL_Window* _window)
 // 	{
+// 		SDL_SysWMinfo wmi;
+// 		SDL_VERSION(&wmi.version_);
+// 		if (!SDL_GetWindowWMInfo(_window, &wmi) )
+// 		{
+// 			return false;
+// 		}
+// 
 // 		PlatformData pd;
-// #	if BX_PLATFORM_LINUX || BX_PLATFORM_BSD
-// 		pd.ndt          = glfwGetX11Display();
-// 		pd.nwh          = (void*)(uintptr_t)glfwGetX11Window(_window);
-// 		pd.context      = glfwGetGLXContext(_window);
-// #	elif BX_PLATFORM_OSX
-// 		pd.ndt          = null;
-// 		pd.nwh          = glfwGetCocoaWindow(_window);
-// 		pd.context      = glfwGetNSGLContext(_window);
-// #	elif BX_PLATFORM_WINDOWS
-// 		pd.ndt          = null;
-// 		pd.nwh          = glfwGetWin32Window(_window);
+// 		version(Posix)
+// 		{
+// 			import core.stdc.stdint : uintptr_t;
+// 			pd.ndt          = wmi.info.x11.display;
+// 			pd.nwh          = cast(void*)cast(uintptr_t)wmi.info.x11.window;
+// 		}
+// 		else version(Darwin)
+// 		{
+// 			pd.ndt          = null;
+// 			pd.nwh          = wmi.info.cocoa.window;
+// 		}
+// 		else version(Windows)
+// 		{
+// 			pd.ndt          = null;
+// 			pd.nwh          = wmi.info.win.window;
+// 		}
 // 		pd.context      = null;
-// #	endif // BX_PLATFORM_WINDOWS
 // 		pd.backBuffer   = null;
 // 		pd.backBufferDS = null;
 // 		setPlatformData(pd);
+// 
+// 		return true;
 // 	}
 // 
-// } // extern(C++, bgfx)
-
-}
+// }
+// 
+// version(BgfxGLFW3)
+// {
+// // #elif defined(_glfw3_h_)
+// // If GLFW/glfw3.h is included before bgfxplatform.h we can enable GLFW3
+// // window interop convenience code.
+// 
+// // #	if BX_PLATFORM_LINUX || BX_PLATFORM_BSD
+// // #		define GLFW_EXPOSE_NATIVE_X11
+// // #		define GLFW_EXPOSE_NATIVE_GLX
+// // #	elif BX_PLATFORM_OSX
+// // #		define GLFW_EXPOSE_NATIVE_COCOA
+// // #		define GLFW_EXPOSE_NATIVE_NSGL
+// // #	elif BX_PLATFORM_WINDOWS
+// // #		define GLFW_EXPOSE_NATIVE_WIN32
+// // #		define GLFW_EXPOSE_NATIVE_WGL
+// // #	endif //
+// // #	include <GLFW/glfw3native.h>
+// 
+// // extern(C++, bgfx)
+// // {
+// // 	void glfwSetWindow(GLFWwindow* _window)
+// // 	{
+// // 		PlatformData pd;
+// // #	if BX_PLATFORM_LINUX || BX_PLATFORM_BSD
+// // 		pd.ndt          = glfwGetX11Display();
+// // 		pd.nwh          = (void*)(uintptr_t)glfwGetX11Window(_window);
+// // 		pd.context      = glfwGetGLXContext(_window);
+// // #	elif BX_PLATFORM_OSX
+// // 		pd.ndt          = null;
+// // 		pd.nwh          = glfwGetCocoaWindow(_window);
+// // 		pd.context      = glfwGetNSGLContext(_window);
+// // #	elif BX_PLATFORM_WINDOWS
+// // 		pd.ndt          = null;
+// // 		pd.nwh          = glfwGetWin32Window(_window);
+// // 		pd.context      = null;
+// // #	endif // BX_PLATFORM_WINDOWS
+// // 		pd.backBuffer   = null;
+// // 		pd.backBufferDS = null;
+// // 		setPlatformData(pd);
+// // 	}
+// // 
+// // } // extern(C++, bgfx)
+// 
+// }
 
 }
 // #endif // defined(_SDL_H)
