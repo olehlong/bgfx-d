@@ -1,6 +1,6 @@
 name "bgfx-d"
-description "A minimal D application."
-copyright "Copyright © 2016, a24680"
+description "D Bindings to the bgfx C++ API"
+copyright "Copyright © 2016, David Limbeck"
 authors "a24680"
 libs "bgfx" "GL"
 lflags "-L."
