@@ -160,7 +160,7 @@ else version(IOS)
 	}
 
 }
-else version(Posix)
+else version(linux)
 {
 // #elif BX_PLATFORM_BSD || BX_PLATFORM_LINUX || BX_PLATFORM_RPI
 
@@ -177,6 +177,21 @@ else version(Posix)
 		setPlatformData(pd);
 	}
 
+}
+else version(BSD)
+{
+	///
+	void x11SetDisplayWindow(void* _display, uint _window, void* _glx = null)
+	{
+		import core.stdc.stdint;
+		PlatformData pd;
+		pd.ndt          = _display;
+		pd.nwh          = cast(void*)cast(uintptr_t)_window;
+		pd.context      = _glx;
+		pd.backBuffer   = null;
+		pd.backBufferDS = null;
+		setPlatformData(pd);
+	}
 }
 else version(NaCl)
 {
@@ -195,7 +210,7 @@ static assert(false, "NaCl platform not supported.");
 // } // extern(C++, bgfx)
 
 }
-else version(Darwin)
+else version(OSX)
 {
 // #elif BX_PLATFORM_OSX
 
