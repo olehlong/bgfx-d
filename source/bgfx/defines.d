@@ -1,6 +1,6 @@
 module bgfx.defines;
 
-enum uint BGFX_API_VERSION = 6;
+enum uint BGFX_API_VERSION = 7;
 
 ///
 enum ulong BGFX_STATE_RGB_WRITE             = 0x0000000000000001; //!< Enable RGB write.

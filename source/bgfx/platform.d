@@ -97,7 +97,7 @@ extern(C++, bgfx)
 	///
 	/// @attention C99 equivalent is `bgfx_override_internal_texture_ptr`.
 	///
-	void overrideInternal(TextureHandle _handle, uintptr_t _ptr);
+	uintptr_t overrideInternal(TextureHandle _handle, uintptr_t _ptr);
 	
 	/// Override internal texture by creating new texture. Previously created
 	/// internal texture will released.
@@ -281,13 +281,13 @@ else version(WinRT)
 // 		}
 // 
 // 		PlatformData pd;
-// 		version(Posix)
+// 		version(linux)
 // 		{
 // 			import core.stdc.stdint : uintptr_t;
 // 			pd.ndt          = wmi.info.x11.display;
 // 			pd.nwh          = cast(void*)cast(uintptr_t)wmi.info.x11.window;
 // 		}
-// 		else version(Darwin)
+// 		else version(OSX)
 // 		{
 // 			pd.ndt          = null;
 // 			pd.nwh          = wmi.info.cocoa.window;
