@@ -521,7 +521,18 @@ extern(C++, bgfx)
 		ubyte bitsPerPixel;       //!< Format bits per pixel.
 		bool    cubeMap;            //!< Texture is cubemap.
 	};
-
+	
+	/// Frame buffer texture attachemnt info.
+	///
+	/// @attention C99 equivalent is `bgfx_attachment_t`.
+	///
+	struct Attachment
+	{
+		TextureHandle handle; //!< Texture handle.
+		ushort mip;         //!< Mip level.
+		ushort layer;       //!< Cubemap side or depth layer/slice.
+	}
+	
 	/// Transform data.
 	///
 	/// @attention C99 equivalent is `bgfx_transform_t`.
@@ -1352,8 +1363,8 @@ extern(C++, bgfx)
 	/// Update Cube texture.
 	///
 	/// @param[in] _handle Texture handle.
-	/// @param[in] _side Cubemap side, where 0 is +X, 1 is -X, 2 is +Y, 3 is
-	///   -Y, 4 is +Z, and 5 is -Z.
+	/// @param[in] _side Cubemap side `BGFX_CUBE_MAP_<POSITIVE or NEGATIVE>_<X, Y or Z>`,
+	///   where 0 is +X, 1 is -X, 2 is +Y, 3 is -Y, 4 is +Z, and 5 is -Z.
 	///
 	///                  +----------+
 	///                  |-z       2|
@@ -1459,7 +1470,18 @@ extern(C++, bgfx)
 	/// @attention C99 equivalent is `bgfx_create_frame_buffer_from_handles`.
 	///
 	FrameBufferHandle createFrameBuffer(ubyte _num, const TextureHandle* _handles, bool _destroyTextures = false);
-
+	
+	/// Create frame buffer.
+	///
+	/// @param[in] _num Number of texture attachments.
+	/// @param[in] _attachment Attachment texture info. See: `Attachment`.
+	/// @param[in] _destroyTextures If true, textures will be destroyed when
+	///   frame buffer is destroyed.
+	///
+	/// @attention C99 equivalent is `bgfx_create_frame_buffer_from_handles`.
+	///
+	FrameBufferHandle createFrameBuffer(ubyte _num, const(Attachment)* _attachment, bool _destroyTextures = false);
+	
 	/// Create frame buffer for multiple window rendering.
 	///
 	/// @param[in] _nwh OS' target native window handle.

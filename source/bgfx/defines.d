@@ -1,6 +1,6 @@
 module bgfx.defines;
 
-enum uint BGFX_API_VERSION = 7;
+enum uint BGFX_API_VERSION = 9;
 
 ///
 enum ulong BGFX_STATE_RGB_WRITE             = 0x0000000000000001; //!< Enable RGB write.
@@ -434,3 +434,11 @@ enum ushort BGFX_PCI_ID_NVIDIA              = 0x10de; //!< nVidia adapter.
 enum ubyte BGFX_HMD_NONE              = 0x00; //!< None.
 enum ubyte BGFX_HMD_DEVICE_RESOLUTION = 0x01; //!< Has HMD native resolution.
 enum ubyte BGFX_HMD_RENDERING         = 0x02; //!< Rendering to HMD.
+
+///
+enum ubyte BGFX_CUBE_MAP_POSITIVE_X = 0x00; //!< Cubemap +x.
+enum ubyte BGFX_CUBE_MAP_NEGATIVE_X = 0x01; //!< Cubemap -x.
+enum ubyte BGFX_CUBE_MAP_POSITIVE_Y = 0x02; //!< Cubemap +y.
+enum ubyte BGFX_CUBE_MAP_NEGATIVE_Y = 0x03; //!< Cubemap -y.
+enum ubyte BGFX_CUBE_MAP_POSITIVE_Z = 0x04; //!< Cubemap +z.
+enum ubyte BGFX_CUBE_MAP_NEGATIVE_Z = 0x05; //!< Cubemap -z.
