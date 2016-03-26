@@ -245,24 +245,24 @@ else version(Windows)
 	}
 
 }
-else version(WinRT)
-{
-// #elif BX_PLATFORM_WINRT
-// #   include <Unknwn.h>
-
-	void winrtSetWindow(IUnknown* _window)
-	{
-		PlatformData pd;
-		pd.ndt          = null;
-		pd.nwh          = _window;
-		pd.context      = null;
-		pd.backBuffer   = null;
-		pd.backBufferDS = null;
-		setPlatformData(pd);
-	}
-
-// #endif // BX_PLATFORM_
-}
+// else version(WinRT)
+// {
+// // #elif BX_PLATFORM_WINRT
+// // #   include <Unknwn.h>
+// 
+// 	void winrtSetWindow(IUnknown* _window)
+// 	{
+// 		PlatformData pd;
+// 		pd.ndt          = null;
+// 		pd.nwh          = _window;
+// 		pd.context      = null;
+// 		pd.backBuffer   = null;
+// 		pd.backBufferDS = null;
+// 		setPlatformData(pd);
+// 	}
+// 
+// // #endif // BX_PLATFORM_
+// }
 
 // version(BgfxSDL2)
 // {

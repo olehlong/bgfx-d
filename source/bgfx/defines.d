@@ -1,6 +1,6 @@
 module bgfx.defines;
 
-enum uint BGFX_API_VERSION = 9;
+enum uint BGFX_API_VERSION = 13;
 
 ///
 enum ulong BGFX_STATE_RGB_WRITE             = 0x0000000000000001; //!< Enable RGB write.
@@ -66,6 +66,8 @@ enum ulong BGFX_STATE_POINT_SIZE_MASK       = 0x0ff0000000000000; //!< Point siz
 /// Enable MSAA write when writing into MSAA frame buffer. This flag is ignored when not writing into
 /// MSAA frame buffer.
 enum ulong BGFX_STATE_MSAA                  = 0x1000000000000000; //!< Enable MSAA rasterization.
+enum ulong BGFX_STATE_LINEAA                = 0x0200000000000000; //!< Enable line AA rasterization.
+enum ulong BGFX_STATE_CONSERVATIVE_RASTER   = 0x0400000000000000; //!< Enable conservative rasterization.
 
 /// Do not use!
 enum BGFX_STATE_RESERVED_SHIFT              = 61;                 //!< Internal bits shift.
@@ -368,6 +370,7 @@ enum uint BGFX_RESET_FLIP_AFTER_RENDER     = 0x00004000; //!< This flag  specifi
 enum uint BGFX_RESET_SRGB_BACKBUFFER       = 0x00008000; //!< Enable sRGB backbuffer.
 enum uint BGFX_RESET_HIDPI                 = 0x00010000; //!< Enable HiDPI rendering.
 enum uint BGFX_RESET_DEPTH_CLAMP           = 0x00020000; //!< Enable depth clamp.
+enum uint BGFX_RESET_SUSPEND               = 0x00040000; //!< Suspend rendering.
 
 enum BGFX_RESET_RESERVED_SHIFT        = 31;                   //!< Internal bits shift.
 enum uint BGFX_RESET_RESERVED_MASK         = 0x80000000; //!< Internal bits mask.
@@ -392,6 +395,8 @@ enum ulong BGFX_CAPS_HIDPI                  = 0x0000000000008000; //!< HiDPI ren
 enum ulong BGFX_CAPS_TEXTURE_BLIT           = 0x0000000000010000; //!< Texture blit is supported.
 enum ulong BGFX_CAPS_TEXTURE_READ_BACK      = 0x0000000000020000; //!< Read-back texture is supported.
 enum ulong BGFX_CAPS_OCCLUSION_QUERY        = 0x0000000000040000; //!< Occlusion query is supported.
+enum ulong BGFX_CAPS_ALPHA_TO_COVERAGE      = 0x0000000000080000; //!< Alpha to coverage is supported.
+enum ulong BGFX_CAPS_CONSERVATIVE_RASTER    = 0x0000000000100000; //!< Conservative rasterization is supported.
 
 ///
 enum ushort BGFX_CAPS_FORMAT_TEXTURE_NONE             = 0x0000; //!< Texture format is not supported.

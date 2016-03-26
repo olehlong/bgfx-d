@@ -145,7 +145,7 @@ extern(C++, bgfx)
 	struct TextureFormat
 	{
 		/// Texture formats:
-				enum Enum
+		enum Enum
 		{
 			BC1,          //!< DXT1
 			BC2,          //!< DXT3
@@ -193,6 +193,10 @@ extern(C++, bgfx)
 			RG32I,
 			RG32U,
 			RG32F,
+			RGB8,
+			RGB8I,
+			RGB8U,
+			RGB8S,
 			RGB9E5F,
 			BGRA8,
 			RGBA8,
@@ -270,7 +274,7 @@ extern(C++, bgfx)
 
 	struct OcclusionQueryResult
 	{
-				enum Enum
+		enum Enum
 		{
 			Invisible,
 			Visible,
@@ -279,6 +283,24 @@ extern(C++, bgfx)
 			Count
 		};
 	};
+	
+	/// Topology conversion function.
+	///
+	/// @attention C99 equivalent is `bgfx_topology_convert_t`.
+	///
+	struct TopologyConvert
+	{
+		enum Enum
+		{
+			TriListFlipWinding,  //!< Flip winding order of triangle list.
+			TriListToLineList,   //!< Convert triangle list to line list.
+			TriStripToTriList,   //!< Convert triangle strip to triangle list.
+			LineStripToLineList, //!< Convert line strip to line list.
+
+			Count
+		};
+	};
+
 
 	enum ushort invalidHandle = ushort.max;
 
@@ -693,6 +715,31 @@ extern(C++, bgfx)
 	///
 	ushort weldVertices(ushort* _output, in ref VertexDecl _decl, const void* _data, ushort _num, float _epsilon = 0.001f);
 
+	/// Convert index buffer for use with different primitive topologies.
+	///
+	/// @param[in] _conversion Conversion type, see `TopologyConvert::Enum`.
+	/// @param[in] _dst Destination index buffer. If this argument it NULL
+	///    function will return number of indices after conversion.
+	/// @param[in] _dstSize Destination index buffer in bytes. It must be
+	///    large enough to contain output indices. If destination size is
+	///    insufficient index buffer will be truncated.
+	/// @param[in] _indices Source indices.
+	/// @param[in] _numIndices Number of input indices.
+	/// @param[in] _index32 Set to `true` if input indices are 32-bit.
+	///
+	/// @returns Number of output indices after conversion.
+	///
+	/// @attention C99 equivalent is `bgfx_topology_convert`.
+	///
+	uint topologyConvert(
+		  TopologyConvert::Enum _conversion
+		, void* _dst
+		, uint _dstSize
+		, const(void)* _indices
+		, uint _numIndices
+		, bool _index32
+		);
+	
 	/// Swizzle RGBA8 image to BGRA8.
 	///
 	/// @param[in] _width Width of input image (pixels).
@@ -740,6 +787,7 @@ extern(C++, bgfx)
 	/// @param[in] _vendorId Vendor PCI id. If set to `BGFX_PCI_ID_NONE` it will select the first
 	///   device.
 	///   - `BGFX_PCI_ID_NONE` - auto-select.
+	///   - `BGFX_PCI_ID_SOFTWARE_RASTERIZER` - Software rasterizer.
 	///   - `BGFX_PCI_ID_AMD` - AMD.
 	///   - `BGFX_PCI_ID_INTEL` - Intel.
 	///   - `BGFX_PCI_ID_NVIDIA` - nVidia.
@@ -754,7 +802,7 @@ extern(C++, bgfx)
 	///   specified, library uses default CRT allocator. The library assumes
 	///   custom allocator is thread safe.
 	///
-	/// @returns `true` if initialization is successful.
+	/// @returns `true` if initialization was successful.
 	///
 	/// @attention C99 equivalent is `bgfx_init`.
 	///
@@ -1851,6 +1899,14 @@ extern(C++, bgfx)
 	///
 	void setUniform(UniformHandle _handle, const void* _value, ushort _num = 1);
 
+/// Set index buffer for draw primitive.
+	///
+	/// @param[in] _handle Index buffer.
+	///
+	/// @attention C99 equivalent is `bgfx_set_index_buffer`.
+	///
+	void setIndexBuffer(IndexBufferHandle _handle);
+
 	/// Set index buffer for draw primitive.
 	///
 	/// @param[in] _handle Index buffer.
@@ -1859,7 +1915,15 @@ extern(C++, bgfx)
 	///
 	/// @attention C99 equivalent is `bgfx_set_index_buffer`.
 	///
-	void setIndexBuffer(IndexBufferHandle _handle, uint _firstIndex = 0, uint _numIndices = uint.max);
+	void setIndexBuffer(IndexBufferHandle _handle, uint _firstIndex, uint _numIndices);
+
+	/// Set index buffer for draw primitive.
+	///
+	/// @param[in] _handle Dynamic index buffer.
+	///
+	/// @attention C99 equivalent is `bgfx_set_dynamic_index_buffer`.
+	///
+	void setIndexBuffer(DynamicIndexBufferHandle _handle);
 
 	/// Set index buffer for draw primitive.
 	///
@@ -1869,7 +1933,11 @@ extern(C++, bgfx)
 	///
 	/// @attention C99 equivalent is `bgfx_set_dynamic_index_buffer`.
 	///
-	void setIndexBuffer(DynamicIndexBufferHandle _handle, uint _firstIndex = 0, uint _numIndices = uint.max);
+	void setIndexBuffer(
+		  DynamicIndexBufferHandle _handle
+		, uint _firstIndex
+		, uint _numIndices
+		);
 
 	/// Set index buffer for draw primitive.
 	///
@@ -1910,11 +1978,24 @@ extern(C++, bgfx)
 	/// Set vertex buffer for draw primitive.
 	///
 	/// @param[in] _handle Dynamic vertex buffer.
+	///
+	/// @attention C99 equivalent is `bgfx_set_dynamic_vertex_buffer`.
+	///
+	void setVertexBuffer(DynamicVertexBufferHandle _handle);
+
+	/// Set vertex buffer for draw primitive.
+	///
+	/// @param[in] _handle Dynamic vertex buffer.
+	/// @param[in] _startVertex First vertex to render.
 	/// @param[in] _numVertices Number of vertices to render.
 	///
 	/// @attention C99 equivalent is `bgfx_set_dynamic_vertex_buffer`.
 	///
-	void setVertexBuffer(DynamicVertexBufferHandle _handle, uint _numVertices = uint.max);
+	void setVertexBuffer(
+		  DynamicVertexBufferHandle _handle
+		, uint _startVertex
+		, uint _numVertices
+		);
 
 	/// Set vertex buffer for draw primitive.
 	///
@@ -2000,7 +2081,7 @@ extern(C++, bgfx)
 	///
 	/// @attention C99 equivalent is `bgfx_submit`.
 	///
-	uint submit(ubyte _id, ProgramHandle _program, int _depth = 0);
+	uint submit(ubyte _id, ProgramHandle _program, int _depth = 0, bool _preserveState = false);
 
 	/// Submit primitive with occlusion query for rendering.
 	///
@@ -2012,7 +2093,7 @@ extern(C++, bgfx)
 	///
 	/// @attention C99 equivalent is `bgfx_submit_occlusion_query.
 	///
-	uint submit(ubyte _id, ProgramHandle _program, OcclusionQueryHandle _occlusionQuery, int _depth = 0);
+	uint submit(ubyte _id, ProgramHandle _program, OcclusionQueryHandle _occlusionQuery, int _depth = 0, bool _preserveState = false);
 
 	/// Submit primitive for rendering with index and instance data info from
 	/// indirect buffer.
@@ -2026,7 +2107,7 @@ extern(C++, bgfx)
 	///
 	/// @attention C99 equivalent is `bgfx_submit_indirect`.
 	///
-	uint submit(ubyte _id, ProgramHandle _program, IndirectBufferHandle _indirectHandle, ushort _start = 0, ushort _num = 1, int _depth = 0);
+	uint submit(ubyte _id, ProgramHandle _program, IndirectBufferHandle _indirectHandle, ushort _start = 0, ushort _num = 1, int _depth = 0, bool _preserveState = false);
 
 	/// Set compute index buffer.
 	///
