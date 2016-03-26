@@ -732,7 +732,7 @@ extern(C++, bgfx)
 	/// @attention C99 equivalent is `bgfx_topology_convert`.
 	///
 	uint topologyConvert(
-		  TopologyConvert::Enum _conversion
+		  TopologyConvert.Enum _conversion
 		, void* _dst
 		, uint _dstSize
 		, const(void)* _indices
