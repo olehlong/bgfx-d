@@ -467,6 +467,8 @@ extern(C++, bgfx)
 		ubyte  numGPUs;          //!< Number of enumerated GPUs.
 		ushort vendorId;         //!< Selected GPU vendor id.
 		ushort deviceId;         //!< Selected GPU device id.
+		bool     homogeneousDepth; //!< True when NDC depth is in [-1, 1] range.
+		bool     originBottomLeft; //!< True when NDC origin is at bottom left.
 
 		/// GPU info.
 		///
@@ -581,6 +583,7 @@ extern(C++, bgfx)
 			float[3] translation;       //!< Eye translation.
 			float[4] fov;               //!< Field of view (up, down, left, right).
 			float[3] viewOffset;        //!< Eye view matrix translation adjustment.
+			float[16] projection;       //!< Eye projection matrix
 			float[2] pixelsPerTanAngle; //!<
 		};
 
@@ -1674,7 +1677,7 @@ extern(C++, bgfx)
 	///
 	void setViewRect(ubyte _id, ushort _x, ushort _y, ushort _width, ushort _height);
 
-    /// @attention C99 equivalent is `bgfx_set_view_rect_auto`.
+	/// @attention C99 equivalent is `bgfx_set_view_rect_auto`.
 	///
 	void setViewRect(ubyte _id, ushort _x, ushort _y, BackbufferRatio.Enum _ratio);
 
