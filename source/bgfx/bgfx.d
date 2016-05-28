@@ -608,6 +608,9 @@ extern(C++, bgfx)
 		ulong gpuTimeBegin; //!< GPU frame begin time.
 		ulong gpuTimeEnd;   //!< GPU frame end time.
 		ulong gpuTimerFreq; //!< GPU timer frequency.
+		
+		ulong waitRender;    //!< Render wait time.
+		ulong waitSubmit;    //!< Submit wait time.
 	};
 
 	/// Vertex declaration.

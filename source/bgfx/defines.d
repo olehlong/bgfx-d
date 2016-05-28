@@ -1,6 +1,6 @@
 module bgfx.defines;
 
-enum uint BGFX_API_VERSION = 13;
+enum uint BGFX_API_VERSION = 14;
 
 ///
 enum ulong BGFX_STATE_RGB_WRITE             = 0x0000000000000001; //!< Enable RGB write.
@@ -308,6 +308,7 @@ enum uint BGFX_TEXTURE_MAG_MASK            = 0x00000300; //!<
 enum uint BGFX_TEXTURE_MIP_POINT           = 0x00000400; //!<
 enum BGFX_TEXTURE_MIP_SHIFT           = 10;                   //!<
 enum uint BGFX_TEXTURE_MIP_MASK            = 0x00000400; //!<
+enum uint BGFX_TEXTURE_MSAA_SAMPLE         = 0x00000800; //!<
 enum uint BGFX_TEXTURE_RT                  = 0x00001000; //!<
 enum uint BGFX_TEXTURE_RT_MSAA_X2          = 0x00002000; //!<
 enum uint BGFX_TEXTURE_RT_MSAA_X4          = 0x00003000; //!<
