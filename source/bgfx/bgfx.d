@@ -555,7 +555,7 @@ extern(C++, bgfx)
 		TextureHandle handle; //!< Texture handle.
 		ushort mip;         //!< Mip level.
 		ushort layer;       //!< Cubemap side or depth layer/slice.
-	}
+	};
 	
 	/// Transform data.
 	///
@@ -609,8 +609,8 @@ extern(C++, bgfx)
 		ulong gpuTimeEnd;   //!< GPU frame end time.
 		ulong gpuTimerFreq; //!< GPU timer frequency.
 		
-		ulong waitRender;    //!< Render wait time.
-		ulong waitSubmit;    //!< Submit wait time.
+		long waitRender;    //!< Render wait time.
+		long waitSubmit;    //!< Submit wait time.
 	};
 
 	/// Vertex declaration.
@@ -851,13 +851,15 @@ extern(C++, bgfx)
 	/// just swaps internal buffers, kicks render thread, and returns. In
 	/// singlethreaded renderer this call does frame rendering.
 	///
+	/// @param[in] _capture Capture frame with graphics debugger.
+	///
 	/// @returns Current frame number. This might be used in conjunction with
 	///   double/multi buffering data outside the library and passing it to
 	///   library via `bgfx.makeRef` calls.
 	///
 	/// @attention C99 equivalent is `bgfx_frame`.
 	///
-	uint frame();
+	uint frame(bool _capture = false);
 
 	/// Returns current renderer backend API type.
 	///
@@ -1455,11 +1457,13 @@ extern(C++, bgfx)
 	/// @param[in] _handle Texture handle.
 	/// @param[in] _data Destination buffer.
 	///
+	/// @returns Frame number when the result will be available. See: `bgfx::frame`.
+	///
 	/// @attention Texture must be created with `BGFX_TEXTURE_READ_BACK` flag.
 	/// @attention Availability depends on: `BGFX_CAPS_TEXTURE_READ_BACK`.
 	/// @attention C99 equivalent is `bgfx_read_texture`.
 	///
-	void readTexture(TextureHandle _handle, void* _data);
+	uint readTexture(TextureHandle _handle, void* _data);
 
 	/// Read back texture content.
 	///
@@ -1467,11 +1471,13 @@ extern(C++, bgfx)
 	/// @param[in] _attachment Frame buffer attachment index.
 	/// @param[in] _data Destination buffer.
 	///
+	/// @returns Frame number when the result will be available. See: `bgfx::frame`.
+	///
 	/// @attention Texture must be created with `BGFX_TEXTURE_READ_BACK` flag.
 	/// @attention Availability depends on: `BGFX_CAPS_TEXTURE_READ_BACK`.
 	/// @attention C99 equivalent is `bgfx_read_frame_buffer`.
 	///
-	void readTexture(FrameBufferHandle _handle, ubyte _attachment, void* _data);
+	uint readTexture(FrameBufferHandle _handle, ubyte _attachment, void* _data);
 
 	/// Destroy texture.
 	///
@@ -1493,6 +1499,8 @@ extern(C++, bgfx)
 	///   - `BGFX_TEXTURE_[MIN/MAG/MIP]_[POINT/ANISOTROPIC]` - Point or anisotropic
 	///     sampling.
 	///
+	/// @returns Handle to frame buffer object.
+	///
 	/// @attention C99 equivalent is `bgfx_create_frame_buffer`.
 	///
 	FrameBufferHandle createFrameBuffer(ushort _width, ushort _height, TextureFormat.Enum _format, uint _textureFlags = BGFX_TEXTURE_U_CLAMP|BGFX_TEXTURE_V_CLAMP);
@@ -1510,6 +1518,8 @@ extern(C++, bgfx)
 	///   - `BGFX_TEXTURE_[MIN/MAG/MIP]_[POINT/ANISOTROPIC]` - Point or anisotropic
 	///     sampling.
 	///
+	/// @returns Handle to frame buffer object.
+	///
 	/// @attention C99 equivalent is `bgfx_create_frame_buffer_scaled`.
 	///
 	FrameBufferHandle createFrameBuffer(BackbufferRatio.Enum _ratio, TextureFormat.Enum _format, uint _textureFlags = BGFX_TEXTURE_U_CLAMP|BGFX_TEXTURE_V_CLAMP);
@@ -1521,6 +1531,8 @@ extern(C++, bgfx)
 	/// @param[in] _destroyTextures If true, textures will be destroyed when
 	///   frame buffer is destroyed.
 	///
+	/// @returns Handle to frame buffer object.
+	///
 	/// @attention C99 equivalent is `bgfx_create_frame_buffer_from_handles`.
 	///
 	FrameBufferHandle createFrameBuffer(ubyte _num, const TextureHandle* _handles, bool _destroyTextures = false);
@@ -1531,6 +1543,8 @@ extern(C++, bgfx)
 	/// @param[in] _attachment Attachment texture info. See: `Attachment`.
 	/// @param[in] _destroyTextures If true, textures will be destroyed when
 	///   frame buffer is destroyed.
+	///
+	/// @returns Handle to frame buffer object.
 	///
 	/// @attention C99 equivalent is `bgfx_create_frame_buffer_from_handles`.
 	///
